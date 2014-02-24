@@ -48,7 +48,6 @@ public class JDBCProgram {
 
 		try{
 			Class.forName(driver);//Loading a driver... Step 1
-
 			//			Driver myDriver = new oracle.jdbc.driver.OracleDriver(); 	
 			//			DriverManager.registerDriver( myDriver );
 
