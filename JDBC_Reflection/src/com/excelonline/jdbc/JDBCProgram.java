@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 
 public class JDBCProgram {
 
-
 	private static Logger log = Logger.getLogger(JDBCProgram.class);	
 
 	static Connection con = null;
@@ -29,14 +28,14 @@ public class JDBCProgram {
 	 * MAIN METHOD
 	 */
 	public static void main(String ...arg) throws Exception {
-		//		new JDBCProgram().selectQuery(100);
-		//		new JDBCProgram().preparedStatement(100,"Steven");
-		//		new JDBCProgram().createTable();
+//	new JDBCProgram().selectQuery(100);
+//				new JDBCProgram().preparedStatement(100,"Steven");
+//				new JDBCProgram().createTable();
 //				new JDBCProgram().createProcedureShowEmployees();
-				new JDBCProgram().callProcedure();
-		//		new JDBCProgram().insertRowInDBAndRollBack(28, "28");
-		//		new JDBCProgram().savePoint();
-//		new JDBCProgram().addBatch();
+//				new JDBCProgram().callProcedure();
+//				new JDBCProgram().insertRowInDBAndRollBack(29, "29");
+//				new JDBCProgram().savePoint();
+		new JDBCProgram().addBatch();
 	}
 
 	static {
@@ -71,6 +70,7 @@ public class JDBCProgram {
 		try{
 			stmt = con.createStatement(); // Step 3
 			rs = stmt.executeQuery("select * from employees where employee_id = "+empid); // Step 4
+			
 			while(rs.next()){
 				System.out.println(rs.getString(1) +" "+rs.getString("first_name") + " "+ rs.getString("last_name"));
 			}
@@ -92,7 +92,7 @@ public class JDBCProgram {
 
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				System.out.println(rs.getString("first_name") + " "+ rs.getString("last_name") +" "+ rs.getString(1));
+				System.out.println(rs.getString("first_name") + " "+ rs.getString("last_name") +" "+ rs.getString(1)+" " + rs.getString("email"));
 			}
 		}catch(SQLException exp){
 			exp.printStackTrace();
@@ -108,10 +108,10 @@ public class JDBCProgram {
 			con.setAutoCommit(false); 
 			Statement stmt = con.createStatement();  
 
-			String SQL = "INSERT INTO MYEXCEL " + "VALUES (107, 'Rita')";
+			String SQL = "INSERT INTO MYEXCEL " + "VALUES (333, 'Rita')";
 			stmt.addBatch(SQL);
 
-			String SQL2 = "INSERT INTO MYEXCEL " + "VALUES (105, 'Rita')";
+			String SQL2 = "INSERT INTO MYEXCEL " + "VALUES (444, 'Rita')";
 			stmt.addBatch(SQL2);
 
 			String SQL3 = "update myexcel set name ='RAJA' where id = 107";
@@ -144,13 +144,12 @@ public class JDBCProgram {
 			Statement stmt = con.createStatement(); //set a Savepoint 
 
 			savepoint1 = con.setSavepoint("Savepoint1"); 
-			String SQL = "INSERT INTO MYEXCEL VALUES (106, 'Rita6')";
-
+			String SQL = "INSERT INTO MYEXCEL VALUES (222, 'Rita125')";
 
 			stmt.executeUpdate(SQL); //Submit a malformed SQL statement that breaks String SQL = "INSERTED IN Employees " + "VALUES (107, 22, 'Sita', 'Tez')"; stmt.executeUpdate(SQL); // If there is no error, commit the changes. conn.commit();
 
 			savepoint2 = con.setSavepoint("Savepoint2"); 
-			String SQL2 = "INSERT INTO MYEXCEL " + "VALUES (107, 'Rita7')";
+			String SQL2 = "INSERT INTO MYEXCEL " + "VALUES (333, 'Rita128')";
 
 			stmt.executeUpdate(SQL2);
 
@@ -158,8 +157,7 @@ public class JDBCProgram {
 		}catch(Exception se){ // If there is any error. 
 			try{
 				log.error("rolling back...");
-				con.rollback(savepoint2); 
-
+				con.rollback(savepoint1);
 			}catch(Exception exp){
 				exp.printStackTrace();
 			}
@@ -252,7 +250,7 @@ public class JDBCProgram {
 		try{
 			cs = con.prepareCall("{call SHOW_EMPLOYEES(?,?)}");
 
-			cs.setInt(1, 100);
+			cs.setInt(1, 101);
 			cs.registerOutParameter(2, Types.VARCHAR);
 
 			cs.executeQuery();
