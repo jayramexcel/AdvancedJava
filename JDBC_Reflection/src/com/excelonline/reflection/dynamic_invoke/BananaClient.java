@@ -15,20 +15,13 @@ public class BananaClient {
 }
 	
 	public static void invokeGreenMethod(Object obj) throws Exception {
-//		System.out.println("BananaClient.invokeGreenMethod()" + obj.getClass());
 		Class c = obj.getClass();
-		
 		Method[] method = c.getMethods();
 		for(Method meth : method) {
 			if("isGreen".equals(meth.getName())){
 				Method m = c.getMethod(meth.getName(), null);
 				m.invoke(obj, null);
 			}
-			if("isYellow".equals(meth.getName())){
-				Method m = c.getMethod(meth.getName(), null);
-				m.invoke(obj, null);
-			}
-//			System.out.println(meth.getName());
 		}
 	}
 }
