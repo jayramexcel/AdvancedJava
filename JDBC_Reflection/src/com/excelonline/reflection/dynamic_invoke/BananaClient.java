@@ -10,8 +10,8 @@ public class BananaClient {
 		SingaporeBanana sb = new SingaporeBanana();
 		
 		invokeGreenMethod(ib);
-//		invokeGreenMethod(ub);
-//		invokeGreenMethod(sb);
+		invokeGreenMethod(ub);
+		invokeGreenMethod(sb);
 }
 	
 	public static void invokeGreenMethod(Object obj) throws Exception {
@@ -19,6 +19,11 @@ public class BananaClient {
 		Method[] method = c.getMethods();
 		for(Method meth : method) {
 			if("isGreen".equals(meth.getName())){
+				Method m = c.getMethod(meth.getName(), null);
+				m.invoke(obj, null);
+			}
+			
+			if("length".equals(meth.getName())){
 				Method m = c.getMethod(meth.getName(), null);
 				m.invoke(obj, null);
 			}
