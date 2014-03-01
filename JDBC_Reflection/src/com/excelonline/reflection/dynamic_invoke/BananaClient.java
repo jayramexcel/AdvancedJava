@@ -13,7 +13,7 @@ public class BananaClient {
 		invokeGreenMethod(ub);
 		invokeGreenMethod(sb);
 }
-	
+
 	public static void invokeGreenMethod(Object obj) throws Exception {
 		Class c = obj.getClass();
 		Method[] method = c.getMethods();
