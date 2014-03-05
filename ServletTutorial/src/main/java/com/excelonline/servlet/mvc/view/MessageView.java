@@ -1,4 +1,4 @@
-package com.excelonline.servlet.mvc;
+package com.excelonline.servlet.mvc.view;
 
 
 import java.io.IOException;
@@ -24,9 +24,9 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class HelloWorld
  */
-@WebServlet(name="DBController" ,description = "My Hello World", urlPatterns = { "/MessageView" })
+@WebServlet(name="MessageView" ,description = "My Hello World", urlPatterns = { "/MessageView" })
 public class MessageView extends HttpServlet {
-	private static Logger log = Logger.getLogger(DBController.class);
+	private static Logger log = Logger.getLogger(MessageView.class);
 	private static final long serialVersionUID = 1L;
 	String message = "";
 
@@ -47,10 +47,14 @@ public class MessageView extends HttpServlet {
 
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
+		String submit = request.getParameter("submit");
 		
 		PrintWriter out = response.getWriter();
-		
-		out.println("<h1>" + fname + " "+ lname+ " Sucessfully saved in DB</h1>");
+		if ("Insert".equals(submit)) {
+			out.println("<h1>" + fname + " "+ lname+ " Sucessfully saved in DB</h1>");
+		}else if("Search".equals(submit)) {
+			
+		}
 	}
 
 	
@@ -58,8 +62,4 @@ public class MessageView extends HttpServlet {
 		response.setContentType("text/html");
 		doGet(request, response);
 	}
-
-	
-
-
 }

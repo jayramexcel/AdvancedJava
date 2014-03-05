@@ -1,4 +1,4 @@
-package com.excelonline.servlet;
+package com.excelonline.servlet.filter;
 
 import java.io.IOException;
 import java.util.Date;
@@ -17,16 +17,16 @@ import org.apache.log4j.Logger;
 /**
  * Servlet Filter implementation class LogFilter
  */
-@WebFilter(filterName="LogFilter" , urlPatterns={"/*"},initParams={
-		@WebInitParam(name="connectionName",value="oracle.jdbc.driver.OracleDriver")
-		})
-public class LogFilter implements Filter {
-	private static Logger log = Logger.getLogger(LogFilter.class);
+/*@WebFilter(filterName="AuthenticationFilter" , urlPatterns={"/*"},initParams={
+		@WebInitParam(name="dbName",value="Oracle")
+		})*/
+public class AuthenticationFilter implements Filter {
+	private static Logger log = Logger.getLogger(AuthenticationFilter.class);
 
     /**
      * Default constructor. 
      */
-    public LogFilter() {
+    public AuthenticationFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -44,7 +44,7 @@ public class LogFilter implements Filter {
 		String ipAddress = request.getRemoteAddr();
 		log.info("IP "+ ipAddress + ", Time "
                 + new Date().toString());
-		request.setAttribute("fname", request.getParameter("fname")+"Shree");
+				
 		chain.doFilter(request, response);
 	}
 
@@ -52,7 +52,7 @@ public class LogFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		String testParam = fConfig.getInitParameter("connectionName"); 
-		log.info("Test Param in LogFilter........: " + testParam); 
+		String testParam = fConfig.getInitParameter("dbName"); 
+		log.info("Test Param in AutFilter.......: " + testParam); 
 	}
 }

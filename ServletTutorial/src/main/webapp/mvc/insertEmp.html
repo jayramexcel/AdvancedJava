@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Enter Details</title>
+</head>
+
+<body>
+	<form action="/servlettuto/employeeController" method="POST">
+		<table>
+			<tr>
+				<td>First Name	:</td>
+				<td> <input type="text" name="fname"></td>
+			</tr>
+			<tr>
+				<td>Last Name	:</td>
+				<td> <input type="text" name="lname"> </td>
+			</tr>
+			<tr>
+				<td>Email	:</td>
+				<td> <input type="text" name="email"> </td> 
+			</tr>
+			<tr>
+				<td>JOB Name :</td>
+				<td> 
+				<select name="jobID">
+					<option value="FI_MGR">Manager</option>
+					<option value="SH_CLERK">Clerk</option>
+					<option value="IT_PROG">Programmer</option>
+					<option value="HR_REP">HR</option>
+				</select>
+				</td> 
+			</tr>
+		</table>
+		<input type="submit" value="Insert" name="submit"/>
+	</form>
+
+</body>
+</html>
