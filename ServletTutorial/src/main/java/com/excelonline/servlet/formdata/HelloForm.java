@@ -2,7 +2,9 @@ package com.excelonline.servlet.formdata;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,11 +23,12 @@ public class HelloForm extends HttpServlet {
 	
 	public HelloForm() {
 		message = "Hello World";
+		
 	}
 	
 	@Override
 	public void init() throws ServletException {
-		System.out.println("In the init Method");
+		System.out.println("In the init Method of HelloForm");
 	}
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +37,9 @@ public class HelloForm extends HttpServlet {
 	      response.setContentType("text/html");
 
 	      PrintWriter out = response.getWriter();
+	      List isAuthenticatedList = (ArrayList)request.getAttribute("isAuthenticated");
 	      
+	      System.out.println("HelloForm.doPost() isAuthenticated  ==== "+ isAuthenticatedList);
 	      /*
 	       * getParameterNames : Its captures all the field names(not the value) from the form
 	       */
