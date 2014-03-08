@@ -2,6 +2,7 @@ package com.excelonline.servlet.formdata;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,10 +30,20 @@ public class HelloForm extends HttpServlet {
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	      response.setContentType("text/html");
 
 	      PrintWriter out = response.getWriter();
+	      
+	      /*
+	       * getParameterNames : Its captures all the field names(not the value) from the form
+	       */
+	      Enumeration enume = request.getParameterNames();
+	      while(enume.hasMoreElements()) {
+	    	  String value = (String)enume.nextElement();
+	    	  System.out.println("HelloForm.doPost()"+ value + " Value = " + request.getParameter(value));
+	      }
+	      
 		  String title = "Using GET Method to Read Form Data";
 	      String docType =
 	      "<!doctype html public \"-//w3c//dtd html 4.0 " +
@@ -50,6 +61,13 @@ public class HelloForm extends HttpServlet {
 	                "</ul>\n" +
 	                "</body></html>");
 	}
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doPost(req, resp);
+	}
+	
 	@Override
 	public void destroy() {
 		System.out.println("In the destroy Method");
