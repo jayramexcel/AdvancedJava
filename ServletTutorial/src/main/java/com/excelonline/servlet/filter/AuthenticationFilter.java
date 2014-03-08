@@ -1,7 +1,9 @@
 package com.excelonline.servlet.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,9 +19,9 @@ import org.apache.log4j.Logger;
 /**
  * Servlet Filter implementation class LogFilter
  */
-/*@WebFilter(filterName="AuthenticationFilter" , urlPatterns={"/*"},initParams={
+@WebFilter(filterName="AuthenticationFilter" , urlPatterns={"/*"},initParams={
 		@WebInitParam(name="dbName",value="Oracle")
-		})*/
+		})
 public class AuthenticationFilter implements Filter {
 	private static Logger log = Logger.getLogger(AuthenticationFilter.class);
 
@@ -44,7 +46,17 @@ public class AuthenticationFilter implements Filter {
 		String ipAddress = request.getRemoteAddr();
 		log.info("IP "+ ipAddress + ", Time "
                 + new Date().toString());
-				
+		String name = request.getParameter("first_name");
+		System.out.println("AuthenticationFilter.doFilter()-----" + name);
+		List list = new ArrayList();
+		
+		if("Jayram".equals(name)) {
+			list.add(name+"Good");
+			request.setAttribute("isAuthenticated", list);
+		}else {
+			list.add(name+"Bad");
+			request.setAttribute("isAuthenticated", list);
+		}
 		chain.doFilter(request, response);
 	}
 
