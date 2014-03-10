@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 /**
  * Servlet Filter implementation class LogFilter
  */
-@WebFilter(filterName="AuthenticationFilter" , urlPatterns={"/*"},initParams={
+@WebFilter(filterName="AuthenticationFilter" , urlPatterns={"/login/*"},initParams={
 		@WebInitParam(name="dbName",value="Oracle")
 		})
 public class AuthenticationFilter implements Filter {
@@ -54,8 +55,10 @@ public class AuthenticationFilter implements Filter {
 			list.add(name+"Good");
 			request.setAttribute("isAuthenticated", list);
 		}else {
-			list.add(name+"Bad");
+			list.add(name);
 			request.setAttribute("isAuthenticated", list);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/BadRequest");
+			dispatcher.forward(request, response);
 		}
 		chain.doFilter(request, response);
 	}
