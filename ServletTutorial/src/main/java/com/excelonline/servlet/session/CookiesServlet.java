@@ -33,7 +33,7 @@ public class CookiesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
@@ -46,14 +46,14 @@ public class CookiesServlet extends HttpServlet {
 		if(cooki !=null){
 			for(Cookie cook : cooki){
 				if("myUniquieID".equals(cook.getName()) && "78656483".equals(cook.getValue())){
-					out.println("I am an existing client...");
+					out.println("<h1>I am an Existing Client...</h1>");
 				}
 				log.info("Return value from Cookies "+ cook.getName() +" cook value "+ cook.getValue());
 			}
 		}else{
 			Cookie cookie = new Cookie("myUniquieID","78656483");
 			response.addCookie(cookie);
-			out.println("I am NOT an existing client...");
+			out.println("<h1>This is a new Client...</h1>");
 		}
 		
 		out.println("<h1>" + message + "</h1>");
