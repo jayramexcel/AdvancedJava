@@ -45,13 +45,33 @@ public class CookiesServlet extends HttpServlet {
 		System.out.println("CookiesServlet.doGet()" + cooki);
 		if(cooki !=null){
 			for(Cookie cook : cooki){
-				if("myUniquieID".equals(cook.getName()) && "78656483".equals(cook.getValue())){
-					out.println("<h1>I am an Existing Client...</h1>");
+				if("Divya".equals(fname)){
+					if ("myUniquieID".equals(cook.getName()) && "123456".equals(cook.getValue())) {
+						out.println("<h1>Hi Divya How are u....Existing </h1>");
+					}else {
+						Cookie cookie = new Cookie("myUniquieID123456","123456");
+						response.addCookie(cookie);
+						out.println("<h1>This is a new Client...</h1>");
+					}
+				}else if("Jayram".equals(fname)){
+					if ("myUniquieID".equals(cook.getName()) && "98765".equals(cook.getValue())) {
+						out.println("<h1>Hi Jayram How are u....</h1>");
+					}else {
+						Cookie cookie = new Cookie("myUniquieID98765","98765");
+						response.addCookie(cookie);
+						out.println("<h1>This is a new Client...</h1>");
+					}
 				}
 				log.info("Return value from Cookies "+ cook.getName() +" cook value "+ cook.getValue());
 			}
 		}else{
-			Cookie cookie = new Cookie("myUniquieID","78656483");
+			String value = "";
+			if("Divya".equals(fname)){
+				value = "123456";
+			}else {
+				value = "98765";
+			}
+			Cookie cookie = new Cookie("myUniquieID"+value,value);
 			response.addCookie(cookie);
 			out.println("<h1>This is a new Client...</h1>");
 		}
