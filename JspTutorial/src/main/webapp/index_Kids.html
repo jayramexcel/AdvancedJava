@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Dynamically create input fields- jQuery</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<style type="text/css">
+	.redBackground {
+		background-color: red;
+	}
+
+</style>
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+		restart();		
+		function restart(){
+			var rangeFrom = parseInt($('#range_from').val());
+			var rangeTo = parseInt($('#range_to').val());
+
+			 var randomArrayOne = generateRandomArray(rangeFrom, rangeTo);
+			 var randomArrayTwo = generateRandomArray(2,10);
+			 
+			$('#dynamictable').append('<table></table>');
+			var table = $('#dynamictable').children();
+			 for (var one = 0; one < randomArrayOne.length ; one++) {
+				 var row = $('<tr></tr>').appendTo(table);
+				 for (var two = 0; two < randomArrayTwo.length ; two++) {
+					 
+					 var td = $('<td></td>');
+					 var div = "<div class='input-group'>"+
+					  "<span class='input-group-addon'>"+randomArrayOne[one] +"X" + randomArrayTwo[two]+" =</span>"+
+					  "<input type='text' name='"+(randomArrayOne[one] * randomArrayTwo[two])+"' class='form-control' >"+
+					 "</div>";
+					 td.html(div).appendTo(row);
+				 } 
+			 }
+		}		 
+		$('#start').click(function(){
+			$('#dynamictable').empty();
+			restart();
+		});
+		$('#validate').click(function(){
+			var allInputs = $(":input");
+			$('#dynamictable input').each(function(index,data) {
+				   var value = $(this).val();
+				   var name = $(this).attr("name");
+				   if(value != name){
+					   $( this ).css( "border", "3px solid red" );
+				   }
+				});
+		});
+		
+		function generateRandomArray(rangeFrom, rangeTo) {
+			
+			if(isNaN(rangeFrom) || isNaN(rangeTo)){
+				rangeFrom = 2;
+				rangeTo = 9;
+			}
+			if(rangeTo < rangeFrom){
+				alert("RangeTo Should be greater than RangeFrom");
+			}
+			var rangeDiff = parseInt(rangeTo-rangeFrom);
+			var array = new Array(rangeDiff+1);
+			var randomNumbers = "";
+			var randomCount = 0;
+			for(var i = 0 ; i < 1000 ; i++) {
+				var tempRandom = Math.floor((Math.random()*rangeTo)+1);
+				if(tempRandom < rangeFrom || tempRandom > rangeTo) continue;
+				
+				var found = false;
+				for (ii = 0; ii < array.length && !found; ii++) {
+				  if (array[ii] == tempRandom) {
+				    found = true; break;
+				  }
+				}
+				if(!found) {
+					array[randomCount++]  = tempRandom;	
+				}
+				if(randomCount == rangeDiff+1 ) {
+					break;
+				}
+			}
+			return array;
+		}	
+    });
+</script>
+
+</head>
+<body>
+	<form action="/SubmitWork">
+		<div align="center">
+		<table align="center">
+		  <tr>
+		    <td>Enter Name : </td>
+		    <td><input type="text" name="name" class='form-control' ></td>
+		  </tr>
+		  <tr>
+		    <td>Range From : </td>
+		    <td><input type="text" id="range_from" placeholder="1-100">To <input type="text" id="range_to" placeholder="1-100"></td>
+		  </tr>
+		  
+		</table>
+			
+		</div>
+		
+		<div align="center" > 
+			<table>
+				<tr>
+				  <td>
+				  <button id="start" type="button" class="btn btn-default navbar-btn">Restart</button>
+				  </td>
+				  <td width="40px"></td>
+				  <td>
+				  <button id="validate" type="button" class="btn btn-default navbar-btn">Validate</button>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+		<div id="dynamictable">
+		</div>
+	</form>
+</body>
+</html>
